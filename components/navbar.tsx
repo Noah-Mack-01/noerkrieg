@@ -13,7 +13,8 @@ import { Input } from "@nextui-org/input";
 import React, { useState }  from "react";
 import { NavConfig } from "@/config/navigation";
 import { Form } from "@nextui-org/form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Link } from "@nextui-org/link";
 
 export default function Navbar(config: NavConfig = {title: '', menuItems: []}) {
   const router = useRouter();
@@ -21,13 +22,15 @@ export default function Navbar(config: NavConfig = {title: '', menuItems: []}) {
     console.log("search!");
     router.push('/search/'+data.get('query'))
   }
+  const currentPath = usePathname();
 
   return (
     <NextNavbar className="flex justify-start bg-gray-200">
-      <NavbarContent justify="start" className="grow-0">
+      <NavbarContent justify="start" className="grow-0 justify-start">
         <NavbarMenuToggle/>
-        <NavbarBrand><span>{config.title}</span></NavbarBrand>
-        <Form action={(data) => search(data)}><Input name="query" className="bg-gray-100" placeholder="Search..." ></Input></Form>
+        <NavbarBrand className="grow-0"><span>{config.title}</span></NavbarBrand>
+        {currentPath != '/' ? <button><Link href="/"><i className="fa-solid fa-house text-black"></i></Link></button> : <></>}
+        <Form className="grow" action={(data) => search(data)}><Input  name="query" className="bg-gray-100 grow" placeholder="Search..." ></Input></Form>
       </NavbarContent>
       <NavbarMenu>
           {config.menuItems.map((item) => <NavbarMenuItem key={item.label}>{item.label}</NavbarMenuItem>)}
