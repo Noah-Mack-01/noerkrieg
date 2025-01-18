@@ -29,7 +29,7 @@ export default function Navbar(config: NavConfig = {title: '', menuItems: []}) {
       <NavbarContent justify="start" className="grow-0 justify-start">
         <NavbarMenuToggle/>
         <NavbarBrand className="grow-0"><span>{config.title}</span></NavbarBrand>
-        {currentPath != '/' ? <button><Link href="/"><i className="fa-solid fa-house text-black"></i></Link></button> : <></>}
+        {currentPath != '/' ? <button><Link href="/home"><i className="fa-solid fa-house text-black"></i></Link></button> : <></>}
         <Form className="grow" action={(data) => search(data)}><Input  name="query" className="bg-gray-100 grow" placeholder="Search..." ></Input></Form>
       </NavbarContent>
       <NavbarMenu>

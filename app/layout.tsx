@@ -11,8 +11,10 @@ import { NavigationConfig } from "@/config/navigation";
 
 export default function RootLayout({
   children,
+  updates
 }: {
   children: React.ReactNode;
+  updates: React.ReactNode;
 }) {
   return (
     <html suppressHydrationWarning lang="en">
@@ -23,7 +25,6 @@ export default function RootLayout({
         <Providers>
           <main className="flex flex-col justify-start align-center">
             <Navbar {...NavigationConfig}></Navbar>
-            <div className="w-full flex flex-col justify-start pt-3 pl-3 space-y-5">{children}</div>
           </main>
           <footer/>
         </Providers>
