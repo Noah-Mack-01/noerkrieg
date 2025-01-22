@@ -1,6 +1,4 @@
 import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -11,10 +9,8 @@ import { NavigationConfig } from "@/config/navigation";
 
 export default function RootLayout({
   children,
-  updates
 }: {
   children: React.ReactNode;
-  updates: React.ReactNode;
 }) {
   return (
     <html suppressHydrationWarning lang="en">
@@ -23,8 +19,9 @@ export default function RootLayout({
       </head>
       <body className={clsx(fontRoboto.variable)}>
         <Providers>
-          <main className="flex flex-col justify-start align-center">
+          <main className="flex flex-col justify-start items-start">
             <Navbar {...NavigationConfig}></Navbar>
+            {children}
           </main>
           <footer/>
         </Providers>

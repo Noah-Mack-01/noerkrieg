@@ -1,15 +1,10 @@
 import UpdateCards from "@/components/card/modal-card";
-import { CardData } from "@/types/dto";
-import { getCollection } from "@/utils/mongodb";
-import { FindCursor } from "mongodb";
-
-
-
-
+import { Update } from "@/types/dto";
+import { UpdateModel } from "@/types/dto";
+import getDatabase from "@/utils/mongodb";
 export default async function UpdatesBar() {
-  const coll = await getCollection('noerkrieg','Updates');
-  const cardsResult: FindCursor<any> = await coll.find({});
-  const cards = await cardsResult.map(card => CardData(card)).toArray();
-  return await <><UpdateCards {...{cardData: cards}}/></>
+  await getDatabase()
+  const updates: Update[] = await UpdateModel.find({}).exec()
+  return <><UpdateCards {...{cardData: updates}}/></>
 }
 

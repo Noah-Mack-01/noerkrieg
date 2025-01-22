@@ -1,12 +1,14 @@
 import { MenuItem } from "@/config/navigation";
+import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import Link from "next/link";
 
 export default function PageHeader(page: MenuItem) {
-  return (
-  <div className="flex flex-row justify-start items-center">
+  return (<>
+  <div className="flex flex-row justify-start items-start  p-2 pt-3">
     {page.imageUrl ? (<Image alt="imageShouldBeHere" src={page.imageUrl}></Image>) : <div className="w-1/12"></div>}
-    <span className="text-lg"><Link href="#">{page.label}</Link></span>
+    <span className="text-xl font-semibold"><Link href="#">{page.label}</Link></span>
   </div>
+  <Divider></Divider></>
   )  
 }

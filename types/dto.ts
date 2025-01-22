@@ -1,10 +1,9 @@
-import { ObjectId } from "mongodb"
-import { ReactNode } from "react"
+import mongoose, { mongo } from "mongoose"
 
 export type CardData = {
   id: string
   name: string
-  body: content[]
+  body: (string | string[])
   tags: string[]
 }
 
@@ -18,3 +17,40 @@ export function CardData(json: any): CardData {
     tags: json.tags,
   }
 }
+
+
+export interface Update extends mongoose.Document {
+  name: string;
+  body: content[];
+  tags: string[];
+}
+
+const Types = mongoose.Schema.Types;
+
+const UpdateSchema = new mongoose.Schema<Update>({
+  name: {
+    type: Types.String,
+    required: true,
+  },
+  body: {
+    type: [Types.Mixed],
+    required: true,
+    validate: {
+      validator: (arr: any[]) => {
+        return arr.every(item => typeof item === 'string' || 
+          (Array.isArray(item) 
+            && item.every(subItem => typeof subItem === 'string')
+          )
+        )
+      },
+      message: "Body must consist of strings or string[]s."
+    }
+  },
+  tags: {
+    type: [Types.String]
+  }
+})
+
+export const UpdateModel = mongoose.model("UPDATES", UpdateSchema);
+
+

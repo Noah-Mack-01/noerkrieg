@@ -6,17 +6,17 @@ import { useDisclosure } from "@nextui-org/modal";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import ResponsiveCardFooter from "./card-footer";
-import { CardData } from "@/types/dto";
+import { CardData, Update } from "@/types/dto";
 
 
 
-export default function UpdateCards(cards: { cardData: CardData[]}) {
+export default function UpdateCards(cards: { cardData: Update[]}) {
   const router = useRouter();
 
-  const DEFAULT_MODAL_CONFIG: CardData = {id: '', name: '', body: [''], tags: []};
+  const DEFAULT_MODAL_CONFIG: Update = {_id: '', name: '', body: [''], tags: []} as any;
   const {onClose, onOpen, isOpen, onOpenChange} = useDisclosure();
-  const [drawerProperties, setDrawerProperties] = useState(DEFAULT_MODAL_CONFIG as CardData); 
-  function handleOpen(item: CardData) {
+  const [drawerProperties, setDrawerProperties] = useState(DEFAULT_MODAL_CONFIG as Update); 
+  function handleOpen(item: Update) {
     console.log("test!"); 
     setDrawerProperties(item);
     onOpen();
@@ -51,7 +51,7 @@ function produceBodyContents(content: (string | string[])[]):ReactNode {
   )}</>);
 }
 
- function dtoToCard(cardData: CardData): ReactNode {
+ function dtoToCard(cardData: Update): ReactNode {
     return( 
       <Card className="p-3 min-w-72 max-w-sm" isPressable onPress={()=>handleOpen(cardData)}>
         <CardHeader className="text-xl font-semibold">{cardData.name}</CardHeader>
