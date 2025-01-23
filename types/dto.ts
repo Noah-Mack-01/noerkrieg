@@ -1,27 +1,8 @@
 import mongoose, { mongo } from "mongoose"
 
-export type CardData = {
-  id: string
-  name: string
-  body: (string | string[])
-  tags: string[]
-}
-
-type content = string | string[]
-
-export function CardData(json: any): CardData {
-  return {
-    id: json._id.toString(),
-    name: json.name,
-    body: json.body,
-    tags: json.tags,
-  }
-}
-
-
 export interface Update extends mongoose.Document {
   name: string;
-  body: content[];
+  body: (string | string[])[];
   tags: string[];
 }
 
@@ -53,4 +34,101 @@ const UpdateSchema = new mongoose.Schema<Update>({
 
 export const UpdateModel = mongoose.connection.useDb('noerkrieg').model("UPDATES", UpdateSchema, "UPDATES");
 
+// Interfaces for nested types
+interface IModifier {
+  name: string;
+  value: number;
+}
+
+interface IIdea {
+  position: number;
+  name: string;
+  description?: string;
+  patch: boolean;
+  modifiers: IModifier[];
+}
+
+// Interface for the full Country document
+export interface ICountry extends mongoose.Document {
+  _id: string;
+  name: string;
+  ideas: IIdea[];
+  culture: string;
+  body: string;
+}
+
+// Create the schema
+const CountrySchema = new mongoose.Schema<ICountry>({
+  _id: {
+    type: Types.String,
+    required: true
+  },
+  name: {
+    type: Types.String,
+    required: true
+  },
+  ideas: {
+    type: [{
+      position: {
+        type: Types.Number,
+        required: true
+      },
+      name: {
+        type: Types.String,
+        required: true
+      },
+      description: Types.String,
+      patch: {
+        type: Types.Boolean,
+        required: true
+      },
+      modifiers: {
+        type: [{
+          name: {
+            type: Types.String,
+            required: true
+          },
+          value: {
+            type: Types.Number,
+            required: true
+          }
+        }],
+        validate: {
+          validator: function(v: IModifier[]) {
+            return v.length >= 1;
+          },
+          message: 'At least one modifier is required'
+        }
+      }
+    }],
+    validate: [
+      {
+        validator: function(v: IIdea[]) {
+          return v.length >= 9;
+        },
+        message: 'At least 9 ideas are required'
+      },
+      {
+        validator: function(v: IIdea[]) {
+          const uniquePositions = new Set(v.map(idea => idea.position));
+          return uniquePositions.size === v.length;
+        },
+        message: 'Ideas must have unique positions'
+      }
+    ]
+  },
+  culture: {
+    type: Types.String,
+    required: true
+  },
+  body: {
+    type: Types.String,
+    required: true
+  }
+}, {
+  _id: false // Disable automatic _id generation since we're using a custom _id
+});
+
+// Create and export the model
+export const CountryModel = mongoose.connection.useDb('noerkrieg').model<ICountry>("COUNTRIES", CountrySchema, "COUNTRIES");
 

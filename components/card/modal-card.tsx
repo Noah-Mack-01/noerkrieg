@@ -6,7 +6,7 @@ import { useDisclosure } from "@nextui-org/modal";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import ResponsiveCardFooter from "./card-footer";
-import { CardData, Update } from "@/types/dto";
+import { Update } from "@/types/dto";
 
 
 
