@@ -51,6 +51,6 @@ const UpdateSchema = new mongoose.Schema<Update>({
   }
 })
 
-export const UpdateModel = mongoose.model("UPDATES", UpdateSchema);
+export const UpdateModel = mongoose.connection.useDb('noerkrieg').model("UPDATES", UpdateSchema, "UPDATES");
 
 
