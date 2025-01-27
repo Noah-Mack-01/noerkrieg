@@ -7,7 +7,7 @@ import Navbar from "@/components/navbar";
 import { NavigationConfig } from "@/config/navigation";
 
 import { LocalizationProps } from "./providers";
-import { getLocalization } from "@/utils/getLocalization";
+import { getLocalization } from "@/utils/localisation_loader";
 
 export default async function RootLayout({
   children
