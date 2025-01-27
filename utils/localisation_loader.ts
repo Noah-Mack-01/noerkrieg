@@ -35,7 +35,7 @@ export function parseLocalizationYaml(content: string): LocalizationProps {
         return line.replace(':0 ', ': ').replace(':1',': ');
       }).forEach(line => {
         let [key, val] = line.split(": ");
-        const newKey = key.replaceAll("MODIFIER_", "").replaceAll("_MODIFIER", "").replaceAll("YEARLY_","").trim().toLowerCase();
+        const newKey = key.replaceAll("MODIFIER_", "")/*.replaceAll("_MODIFIER", "")*/.replaceAll("YEARLY_","").trim().toLowerCase();
         output[newKey] = val ? val.replaceAll('"', ''): '';
 
       })

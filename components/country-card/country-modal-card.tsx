@@ -5,16 +5,17 @@ import { getCountryAdjective } from "@/utils/localisation_utils";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Image } from "@heroui/image";
+import { Link } from "@heroui/link";
 import { useContext } from "react";
 
 
 
-export default function CountryModal(props: {country: ICountry}) {
+export default function CountryCard(props: {country: ICountry}) {
   const localization: LocalizationProps = useContext(LocalizationContext);
   return (<Card className="bg-zinc-200">
     <CardHeader className="flex flex-row justify-between pb-0 font-semibold">
       <span>{getCountryAdjective(props.country, localization)} Ideas</span>
-      <span className="text-blue-500">[Compare]</span></CardHeader>
+      <Link href={"../country/compare?tags="+props.country._id} size="sm">Compare</Link></CardHeader>
     <CardBody className="py-0">
       <ul>
       {props.country.ideas.map(idea => 
