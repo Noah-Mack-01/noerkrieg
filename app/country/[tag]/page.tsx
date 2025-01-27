@@ -1,10 +1,13 @@
 
 import getDatabase from "@/utils/mongodb";
  import { CountryModel, ICountry } from "@/types/dto"
-export default async function CountryPage({params}: { params: Promise<{tag: string}>}) {
+import CountryModal from "@/components/country-card/country-modal-card";
+import { ReactNode } from "react";
+export default async function CountryPage({params}: { params: Promise<{tag: string}>}): Promise<ReactNode> {
   await getDatabase();
   const tag = (await params).tag;
-  const country = await CountryModel.findById(tag);
-  return <div>{!!country ? <><span>{country.name}</span><ul>{country.ideas.map(idea => <li key={tag+"-idea-"+idea.position}>{idea.name}</li>)}</ul></>: ''}</div>
+  const country = await CountryModel.findById(tag.toUpperCase());
+  if (!country) return <></>; // pick up nextjs routing
+  else return (<CountryModal country={country}></CountryModal>)
 }
 

@@ -1,6 +1,6 @@
 import { MenuItem } from "@/config/navigation";
 import PageHeader from "./page-header";
-import { Divider } from "@nextui-org/divider";
+import { Divider } from "@heroui/divider";
 
 export default function ListComponent(props: { title: string, ListedItems: MenuItem[]}) {
   return (

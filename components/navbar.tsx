@@ -7,14 +7,14 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem
-} from "@nextui-org/navbar";
-import { Input } from "@nextui-org/input";
+} from "@heroui/navbar";
+import { Input } from "@heroui/input";
 
 import React, { useState }  from "react";
 import { NavConfig } from "@/config/navigation";
-import { Form } from "@nextui-org/form";
+import { Form } from "@heroui/form";
 import { usePathname, useRouter } from "next/navigation";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 export default function Navbar(config: NavConfig = {title: '', menuItems: []}) {
   const router = useRouter();

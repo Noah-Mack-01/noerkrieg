@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import UpdateCards from "@/components/card/modal-card";
+import UpdateCards from "@/components/update-card/modal-card";
 import { Update } from "@/types/dto";
 import { UpdateModel } from "@/types/dto";
 import getDatabase from "@/utils/mongodb";

@@ -3,15 +3,22 @@
 import type { ThemeProviderProps } from "next-themes";
 
 import * as React from "react";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import yaml from "js-yaml";
+import { createContext } from "react";
+import path from "path";
+
+export type LocalizationProps = {[key: string]: string};
+export const LocalizationContext = createContext({});
 
 export interface ProvidersProps {
   children: React.ReactNode;
   themeProps?: ThemeProviderProps;
+  localization : LocalizationProps; 
 }
-
 declare module "@react-types/shared" {
   interface RouterConfig {
     routerOptions: NonNullable<
@@ -20,12 +27,22 @@ declare module "@react-types/shared" {
   }
 }
 
-export function Providers({ children, themeProps }: ProvidersProps) {
-  const router = useRouter();
 
+function LocalizationProvider({localization, children}: { 
+  localization: LocalizationProps, 
+  children: React.ReactNode}) {
+  return <LocalizationContext.Provider value={localization}>{children}</LocalizationContext.Provider>
+}
+
+export function Providers({ children, themeProps, localization}: ProvidersProps) {
+  const router = useRouter();
   return (
-    <NextUIProvider navigate={router.push}>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-    </NextUIProvider>
+    <HeroUIProvider navigate={router.push}>
+      <NextThemesProvider {...themeProps}>
+        <LocalizationProvider {...{localization}}>
+          {children}
+          </LocalizationProvider>
+        </NextThemesProvider>
+    </HeroUIProvider>
   );
 }
